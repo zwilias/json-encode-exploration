@@ -1,5 +1,5 @@
 # json-encode-exploration [![Build Status](https://travis-ci.org/zwilias/json-encode-exploration.svg)](https://travis-ci.org/zwilias/json-encode-exploration)
-> Retain highleven structural information while encoding to JSON
+> Retain highlevel structural information while encoding to JSON
 
 So this is a bit of an experiment. Rather than encoding straight into a
 `Json.Encode.Value`, this encodes to one of three things:
