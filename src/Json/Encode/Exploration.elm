@@ -24,31 +24,71 @@ module Json.Encode.Exploration
         , value
         )
 
-{-| Examples assume the following imports:
+{-| Retain some structural information while encoding to JSON.
+
+Examples assume the following imports:
 
     import Json.Encode
+
+
+# Building blocks
+
+@docs Value, Encoded, Seq, Obj, toValue
+
+
+# Primitives
+
+@docs string, int, float, null, value, force, maybe
+
+
+# Sequences
+
+@docs list, listOf, emptySeq, cons, concatSeq
+
+
+# Objects
+
+@docs object, objectOf, emptyObj, addField, concatObj
 
 -}
 
 import Json.Encode as Encode
 
 
+{-| For readability, an alias for `Json.Encode.Value` which is also aliased as
+`Json.Decode.Value`
+-}
 type alias Value =
     Encode.Value
 
 
+{-| Something which has been encoded. The type parameter `t` can realistically
+be one of three things:
+
+  - `Value` which represents opaque encoded values. This included primitives or
+    any other value that was made opaque using `force` or `value`.
+  - `Seq` which represents a sequence of things. I.e. a `List` or a JS array.
+  - `Obj` which represents an object made up of key-value pairs.
+
+-}
 type Encoded t
     = Encoded (t -> Value) t
 
 
+{-| An opaque sequence of things.
+-}
 type Seq
     = Seq (List Value)
 
 
+{-| An opaque object of key-value pairs.
+-}
 type Obj
     = Obj (List ( String, Value ))
 
 
+{-| Wrap up encoding to turn an `Encoded` thing into a `Value`.
+-}
 toValue : Encoded a -> Value
 toValue (Encoded encoder value) =
     encoder value
